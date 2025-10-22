@@ -2,7 +2,7 @@
 import React from "react"
 import { useState, useEffect } from "react"
 
-const ListaProductos = ({addToCart}) => {
+const ListaProductos = ({agregarAlCarrito}) => {
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
@@ -54,7 +54,7 @@ const ListaProductos = ({addToCart}) => {
 
             {/* Boton */}
             <button
-                onClick={() => addToCart(producto)}
+                onClick={() => agregarAlCarrito(producto)}
                 className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition w-full font-medium cursor-pointer"
             >
                 Agregar al carrito
