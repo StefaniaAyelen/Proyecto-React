@@ -7,6 +7,7 @@ import Inicio from './pages/Inicio';
 import Moda from './pages/Moda';
 import PagCarrito from './pages/PagCarrito';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import DetalleProducto from './pages/DetalleProducto';
 
 function App() {
   const [carrito, setCarrito] = useState([]);
@@ -19,16 +20,23 @@ function App() {
     setCarrito([])
   }
 
+  function eliminarDelCarrito(id) {
+    const nuevoCarrito = carrito.filter(producto => producto.id !== id);
+    setCarrito(nuevoCarrito);
+  }
+
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800 font-sans flex flex-col">
       <BrowserRouter>
-        <Header />
+        <Header carrito={carrito} />
         <Navbar />
-          <div>
+          <div className='flex-1'>
             <Routes>
-              <Route path="/" element={<Inicio agregarAlCarrito={agregarAlCarrito} carrito={carrito} vaciarCarrito={vaciarCarrito} />} />
-              <Route path="/Moda" element={<Moda />} />
-              <Route path='/pagCarrito' element={<PagCarrito/>}/>
+              <Route path="/" element={<Inicio agregarAlCarrito={agregarAlCarrito} />} />
+              <Route path="/Moda" element={<Moda agregarAlCarrito={agregarAlCarrito} />} />
+              <Route path='/pagCarrito' element={<PagCarrito carrito={carrito} vaciarCarrito={vaciarCarrito} eliminarDelCarrito={eliminarDelCarrito}/>}/>
+              <Route path="/producto/:id" element={<DetalleProducto />} />
           </Routes>
           </div>
         <Footer />
