@@ -1,12 +1,11 @@
 import ListaProductos from "./ListaProductos";
 import Carrito from "./carrito";
 
-function Main({carrito , agregarAlCarrito, vaciarCarrito}) {
+function Main({agregarAlCarrito}) {
     return (
         <main>
         <div>
             <ListaProductos agregarAlCarrito={agregarAlCarrito}></ListaProductos>
-            <Carrito carrito={carrito} vaciarCarrito={vaciarCarrito}></Carrito>
         </div>
         </main>
     );
