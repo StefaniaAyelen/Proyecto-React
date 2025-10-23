@@ -1,6 +1,7 @@
 // Muestra los productos disponibles.
 import React from "react"
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom";
 
 const ListaProductos = ({agregarAlCarrito}) => {
     const [productos, setProductos] = useState([]);
@@ -51,6 +52,10 @@ const ListaProductos = ({agregarAlCarrito}) => {
                 <p className="text-gray-500 text-sm">{producto.category}</p>
                 <p className="text-indigo-600 font-bold mt-1">${producto.price}</p>
             </div>
+
+            <Link to={`/producto/${producto.id}`} className="text-indigo-600 hover:underline">
+                Ver detalle
+            </Link>
 
             {/* Boton */}
             <button
