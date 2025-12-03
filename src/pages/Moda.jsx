@@ -1,31 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { CarritoContext } from "../context/CarritoContext";
 
-function Moda({agregarAlCarrito}){
+function Moda(){
+    const { agregarAlCarrito } = useContext(CarritoContext);
     const [productos, setProductos] = useState([]);
-        const [cargando, setCargando] = useState(true);
-        const [error, setError] = useState(null);
-        useEffect(() => {
-            fetch('https://fakestoreapi.com/products')
-                .then((respuesta) => respuesta.json())
-                .then((datos) => {
-                    setProductos(datos);
-                    setCargando(false);
-                })
-                .catch((error) => {
-                    setError('Hubo un error al cargar los productos')
-                    setCargando(false)
-                })
-        }, []);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        fetch('https://692f3b6391e00bafccd700ba.mockapi.io/edupro/products')
+            .then((respuesta) => respuesta.json())
+            .then((datos) => {
+                setProductos(datos);
+                setCargando(false);
+            })
+            .catch((error) => {
+                setError('Hubo un error al cargar los productos')
+                setCargando(false)
+            })
+    }, []);
 
-        const productosFiltrados = productos.filter((p) => p.category === "men's clothing" || p.category === "women's clothing")
+    const productosFiltrados = productos.filter((p) => p.category === "men's clothing" || p.category === "women's clothing")
     
-        if (cargando) {
-            return <p>Cargando productos...</p>
-        }
-        if (error) {
-            return <p>{error}</p>
-        }
+    if (cargando) {
+        return <p>Cargando productos...</p>
+    }
+    if (error) {
+        return <p>{error}</p>
+    }
+
     return(
         <div>
             <h2 className="text-3xl font-bold text-blue-500 text-center m-5">Productos de Moda!</h2>
