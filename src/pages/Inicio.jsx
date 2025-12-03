@@ -1,8 +1,8 @@
 import Main from "../components/Main";
 
-function Inicio({agregarAlCarrito}) {
+function Inicio() {
     return(
-        <Main agregarAlCarrito={agregarAlCarrito}></Main>
+        <Main></Main>
     )
 }
 
