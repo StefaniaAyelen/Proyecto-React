@@ -1,14 +1,18 @@
 // Muestra los productos disponibles.
 import React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Link } from "react-router-dom";
+import { CarritoContext } from "../context/CarritoContext";
+import { AuthContext } from "../context/AuthContext";
 
-const ListaProductos = ({agregarAlCarrito}) => {
+const ListaProductos = () => {
+    const { agregarAlCarrito } = useContext(CarritoContext);
+    const { isLoggedIn } = useContext(AuthContext);
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
     useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
+        fetch('https://692f3b6391e00bafccd700ba.mockapi.io/edupro/products')
             .then((respuesta) => respuesta.json())
             .then((datos) => {
                 setProductos(datos);
@@ -59,7 +63,7 @@ const ListaProductos = ({agregarAlCarrito}) => {
 
             {/* Boton */}
             <button
-                onClick={() => agregarAlCarrito(producto)}
+                onClick={isLoggedIn ? () => agregarAlCarrito(producto) : undefined}
                 className="mt-4 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition w-full font-medium cursor-pointer"
             >
                 Agregar al carrito
