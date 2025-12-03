@@ -1,9 +1,9 @@
 import Carrito from "../components/carrito"
 
-function pagCarrito({carrito , vaciarCarrito, eliminarDelCarrito}) {
+function pagCarrito() {
     return(
         <div>
-            <Carrito carrito={carrito} vaciarCarrito={vaciarCarrito} eliminarDelCarrito={eliminarDelCarrito}></Carrito>
+            <Carrito></Carrito>
         </div>
     )
 }
