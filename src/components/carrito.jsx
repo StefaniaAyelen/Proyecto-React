@@ -1,5 +1,11 @@
 // Muestra los productos que el usuario agrego
-const Carrito = ({carrito, vaciarCarrito, eliminarDelCarrito}) => {
+import { useContext } from "react";
+import { CarritoContext } from "../context/CarritoContext";
+
+const Carrito = () => {
+    const { carrito } = useContext(CarritoContext);
+    const { vaciarCarrito } = useContext(CarritoContext);
+    const { eliminarDelCarrito } = useContext(CarritoContext);
     const total = carrito.reduce((precios, producto) => precios + producto.price, 0);
     return (
         <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6 mt-8">
