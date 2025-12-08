@@ -1,31 +1,35 @@
 import { createContext, useState, useEffect } from "react";
 export const AuthContext = createContext();
 
+const ADMIN_EMAIL = 'admin@edu.com';
 function AuthProvider({ children }) {
     
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const userGuardado = localStorage.getItem("isLoggedIn");
-        if (userGuardado) {
-        setIsLoggedIn(JSON.parse(userGuardado));
+        const emailGuardado = localStorage.getItem("userEmail");
+        if (emailGuardado) {
+            setCurrentUser(JSON.parse(emailGuardado));
         }
         setLoading(false);
     }, []);
 
-    function login(){
-        setIsLoggedIn(true);
-        localStorage.setItem("isLoggedIn", JSON.stringify(true));
+    function login(email){
+        setCurrentUser(email);
+        localStorage.setItem("userEmail", JSON.stringify(email));
     }
 
     function logout(){
-        setIsLoggedIn(false)
-        localStorage.removeItem("isLoggedIn")
+        setCurrentUser(null);
+        localStorage.removeItem("userEmail")
     }
 
+    const isLoggedIn = !!currentUser;
+    const isAdmin = currentUser === ADMIN_EMAIL;
+
     return (
-    <AuthContext.Provider value={{isLoggedIn, login, logout, loading}}>
+    <AuthContext.Provider value={{isLoggedIn, isAdmin , currentUser, login, logout, loading}}>
       {children}
     </AuthContext.Provider>
   );
