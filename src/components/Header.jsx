@@ -10,9 +10,11 @@ function Header() {
     const cantidadTotal = carrito.length;
     const navigate = useNavigate();
     const { isLoggedIn, logout } = useContext(AuthContext);
+    const { vaciarCarrito } = useContext(CarritoContext);
     const handleAuthClick = () => {
         if (isLoggedIn) {
             // Si está logueado, al hacer clic, hace LOGOUT
+            vaciarCarrito()
             logout();
         } else {
             // Si NO está logueado, al hacer clic, va a LOGIN
