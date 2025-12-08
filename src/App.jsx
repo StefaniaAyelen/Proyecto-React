@@ -12,7 +12,7 @@ import DetalleProducto from './pages/DetalleProducto';
 import ProtectedRoute from './components/ProtectedRoute';
 import AuthProvider from './context/AuthContext';
 import AdminPanel from './components/AdminPanel';
-import ProductoForm from './components/ProductOForm';
+import ProductoForm from './components/ProductoForm';
 import AdminProtectedRoute from './components/AdminProtectedRoute';
 
 function App() {
