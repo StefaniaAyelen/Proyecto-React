@@ -6,7 +6,7 @@ const Carrito = () => {
     const { carrito } = useContext(CarritoContext);
     const { vaciarCarrito } = useContext(CarritoContext);
     const { eliminarDelCarrito } = useContext(CarritoContext);
-    const total = carrito.reduce((precios, producto) => precios + producto.price, 0);
+    const total = carrito.reduce((precios, producto) => precios + Number(producto.price), 0);
     return (
         <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-6 mt-8">
         <h2 className="text-2xl font-bold text-indigo-700 mb-6 text-center">
