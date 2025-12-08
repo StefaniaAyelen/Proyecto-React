@@ -1,6 +1,5 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// Asegúrate de que las rutas de importación sean correctas
 import { AuthContext } from '../context/AuthContext'; 
 
 const Login = () => {
@@ -9,47 +8,36 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
     const [cargando, setCargando] = useState(false);
-
-    //Obtener la función de login del Contexto
-    const { login, isLoggedIn } = useContext(AuthContext);
-
-    // Hook para la navegación programática (redirigir al usuario)
+    const { login, isLoggedIn, isAdmin } = useContext(AuthContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAdmin) {
+            navigate('/admin/productos', { replace: true });
+        } else if (isLoggedIn) {
+            navigate('/', { replace: true });
+        }
+    }, [isAdmin, isLoggedIn, navigate]);
 
     // Función que se ejecuta al enviar el formulario
     const handleLoginSubmit = (e) => {
         e.preventDefault(); // Previene la recarga de la página
 
-        // Validación Simulada
         if (email === '' || password === '') {
             setError('Todos los campos son obligatorios.');
             return;
         }
-
-        // Simular un inicio de sesión exitoso (ejemplo: si la contraseña es "123")
-        if (email === 'test@edu.com' && password === '123') {
-            setCargando(true);
-            setError(null);
-
-            // Simular un tiempo de espera de la API
-            setTimeout(() => {
-                login(); // Llama a la función del AuthContext que actualiza el estado y localStorage
-                setCargando(false);
-                
-                // Redirigir al usuario a la página de inicio
-                navigate('/'); 
-
-            }, 1000);
-        } else {
-            setError('Credenciales incorrectas. Intenta con test@edu.com y 123');
-        }
+        setTimeout(() => {
+            if (email === 'admin@edu.com' && password === '123') {
+                login(email);
+            } else if (email === 'test@edu.com' && password === '123') {
+                login(email);
+            } else {
+                setError('Credenciales incorrectas. Intenta con admin@edu.com (Admin) o test@edu.com (Cliente)');
+            }      
+            setCargando(false);
+        }, 1000);
     };
-    
-    // Si el usuario ya está logueado, lo redirijo
-    if (isLoggedIn) {
-        navigate('/'); 
-    }
-
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -58,9 +46,8 @@ const Login = () => {
                     <h1 className="text-3xl font-extrabold text-center text-indigo-600">
                         Iniciar Sesión
                     </h1>
-                    <p>Email: test@edu.com | Contraseña: 123
-                    </p>
-
+                    <p>Email: test@edu.com | Contraseña: 123 (Usuario) </p>
+                    <p>Email: admin@edu.com | Contraseña: 123 (Admin) </p>
                     <form onSubmit={handleLoginSubmit} className="space-y-6">
                         {/* Campo Email */}
                         <div>
@@ -73,11 +60,10 @@ const Login = () => {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                aria-label="Correo electrónico" // Requerimiento de Accesibilidad
+                                aria-label="Correo electrónico"
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                         </div>
-
                         {/* Campo Contraseña */}
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -89,18 +75,16 @@ const Login = () => {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                aria-label="Contraseña" // Requerimiento de Accesibilidad
+                                aria-label="Contraseña"
                                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                         </div>
-
                         {/* Mensaje de Error */}
                         {error && (
                             <div className="text-red-600 text-sm font-medium p-2 bg-red-50 rounded-md">
                                 {error}
                             </div>
                         )}
-                        
                         {/* Botón de Enviar */}
                         <button
                             type="submit"
@@ -111,7 +95,6 @@ const Login = () => {
                         >
                             {cargando ? 'Cargando...' : 'Iniciar Sesión'}
                         </button>
-
                     </form>
                 </div>
             </div>
