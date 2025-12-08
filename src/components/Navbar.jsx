@@ -1,7 +1,10 @@
 // Estructura visual del Navbar
 
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 function Navbar() {
+    const { isAdmin } = useContext(AuthContext)
     return (
         <nav className="bg-indigo-700 text-white flex justify-center gap-8 py-3 shadow">
             <Link to="/" className="hover:text-yellow-300 transition font-medium">
@@ -13,6 +16,11 @@ function Navbar() {
             <Link to="/PagCarrito" className="hover:text-yellow-300 transition font-medium">
                 Carrito
             </Link>
+            {isAdmin && (
+                <Link to="/admin/productos" className="hover:text-yellow-300 transition font-bold text-lg">
+                    Administración
+                </Link>
+            )}
         </nav>
     );
 }
