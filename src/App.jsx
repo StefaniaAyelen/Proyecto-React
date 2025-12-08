@@ -11,6 +11,9 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import DetalleProducto from './pages/DetalleProducto';
 import ProtectedRoute from './components/ProtectedRoute';
 import AuthProvider from './context/AuthContext';
+import AdminPanel from './components/AdminPanel';
+import ProductoForm from './components/ProductOForm';
+import AdminProtectedRoute from './components/AdminProtectedRoute';
 
 function App() {
 
@@ -28,6 +31,9 @@ function App() {
                   <Route path="/Moda" element={<Moda/>} />
                   <Route path='/pagCarrito' element={<ProtectedRoute> <PagCarrito/> </ProtectedRoute> }/>
                   <Route path="/producto/:id" element={<DetalleProducto/>} />
+                  <Route path="/admin/productos" element={<AdminProtectedRoute> <AdminPanel /> </AdminProtectedRoute>}/>
+                  <Route path="/admin/crear" element={<AdminProtectedRoute> <ProductoForm /> </AdminProtectedRoute>}/>
+                  <Route path="/admin/editar/:id" element={<AdminProtectedRoute> <ProductoForm /> </AdminProtectedRoute>}/>
               </Routes>
               </div>
             <Footer />
